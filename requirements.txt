@@ -1,0 +1,7 @@
+gunicorn
+pycurl
+simplejson
+tornado
+wsgiref
+Mongoengine==0.7.5
+unidecode

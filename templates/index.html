@@ -1,0 +1,29 @@
+
+{% extends "main.html" %}
+{% autoescape None %}
+
+{% block body %}
+<br>
+
+<div class="row-fluid">
+	<div class="span12">
+		<div class="row-fluid">
+			<div class="span12">
+				<img src="{{ static_url("images/mainBanner.png") }}">
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				<h2>Reportes del Día</h2>
+				<img src="{{ static_url("images/reportes.png") }}">
+			</div>
+			<div class="span6">
+				<h2>Tweets Relevantes</h2>
+				<img src="{{ static_url("images/mainTweets.png") }}">
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% end %}
