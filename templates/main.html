@@ -47,50 +47,19 @@
 <body>
 	<div class="container">
 		<div class="row-fluid">
-			<div class="span12">
-				{% block header %}<h1>Reportar Violencia en México</h1>{% end %}
-				<br>
+			<div id="menu-bar" class="span3">
+				<a href="/"><button class="btn btn-primary">Main</button></a>
 			</div>
-			<div class="row-fluid">
-				<div id="menu-bar" class="span3">
-					<a href="/"><button class="btn btn-primary">Inicio</button></a>
-				</div>
-				<div id="menu-bar" class="span3">
-					<div class="btn-group">
-						<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Reportar
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu">
-							<li><a href="/reporte/agregar/">Agregar Artículos</a></li>
-							<li><a href="/reporte/lugar/">Verificar Lugar</a></li>
-							<li><a href="/reporte/fecha/">Verificar Fechas</a></li>
-							<li><a href="/reporte/doble/">Eliminar Duplicados</a></li>
-							<li><a href="/reporte/detalles/">Llenar Detalles</a></li>
-						</ul>
-					</div>
-				</div>
-				<div id="menu-bar" class="span3">
-					<a href="/buscar/"><button class="btn btn-primary">Buscar</button></a>
-				</div>
-				<div id="menu-bar" class="span3">
-					<a href="/descargar/"><button class="btn btn-primary">Descargar/API</button></a>
-				</div>
+			<div id="menu-bar" class="span3">
+				<a href="/add/"><button class="btn btn-primary">Add Student</button>
+			</div>
+			<div id="menu-bar" class="span3">
+				<a href="/view/"><button class="btn btn-primary">View Student</button></a>
 			</div>
 		</div>
 		{% block body %}{% end %}
 	</div>
 	<br>
-	<footer id="footer" class="footer">
-		<div class="container">
-			<ul class="footer-links">
-				<li><a href="/contacto/">Contacto</a></li>
-				<li class="muted"> • </li>
-				<li><a href="/acerca/">Acerca De</a></li>
-				<li class="muted"> • </li>
-				<li><a href="/condiciones/">Condiciones de Uso</a></li>
-			</ul>
-		</div>
-	</footer>
 	<script src="{{ static_url("js/script.js") }}"></script>
 </body>
 </html>
