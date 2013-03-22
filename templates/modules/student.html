@@ -1,11 +1,3 @@
 <div class="event">
-  <h5>{{ student["firstName"] }} {{ student["lastName"] }} - {{ student["gradYear"] }}</h5>
-  <p>{{ student["nyuid"] }}</p>
-  	{% if student["cardid"] %}
-		<p><a href="/edit/{{ student['cardid'] }}">Edit</a></p>
-	{% else %} 
-		<p><a href="/edit/{{ student['nyuid'] }}">Edit</a></p>
-	{% end %}
-	<p><a href="/{{ student['id'] }}">View</a></p>
-	<p><a href="/delete/{{ student['id'] }}">Delete</a></P>
+	<p><a href="/edit/{{ student['nyuid'] }}">{{ student["firstName"] }} {{ student["lastName"] }}</a></p>
 </div>

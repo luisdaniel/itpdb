@@ -13,6 +13,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
+from tornado.escape import json_encode
 
 import pymongo
 import bson
@@ -45,9 +46,11 @@ class Application(tornado.web.Application):
 		handlers = [
 			(r"/", MainHandler),
 			(r"/add/", AddStudentHandler),
-			(r"/view/", ViewStudentHandler),
+			(r"/view/([a-zA-Z0-9]{6})", ViewStudentHandler),
 			(r"/edit/([a-zA-Z0-9]{6})", EditStudentHandler),
-			(r"/edit/([a-zA-Z0-9]{24})", EditStudentHandler)
+			(r"/edit/([a-zA-Z0-9]{24})", EditStudentHandler),
+			(r"/delete/([a-zA-Z0-9]{24})", StudentDeleteHandler),
+			(r"/delete/([a-zA-Z0-9]{6})", StudentDeleteHandler)
 		]
 		settings = dict(
 			template_path=os.path.join(os.path.dirname(__file__), "templates"),
@@ -62,8 +65,8 @@ class MainHandler(tornado.web.RequestHandler):
 		students = models.Student.objects()
 		self.render(
 			"index.html",
-			page_title = "Reporta Violencia",
-			header_text = "",
+			page_title = "ITP Database",
+			header_text = "Welcome to the ITP Databse. Behave.",
 			students = students
 		)
 
@@ -91,12 +94,16 @@ class AddStudentHandler(tornado.web.RequestHandler):
 		self.redirect('/')
 
 class ViewStudentHandler(tornado.web.RequestHandler):
-	def get(self):
-		self.render(
-			"viewStudent.html",
-			page_title="View Student",
-			header_text=""
-		)
+	def get(self, sid):
+		student = models.Student.objects.get(nyuid = sid)
+		sObj = {
+			"firstName": student.firstName,
+			"lastName": student.lastName,
+			"gradYear": student.gradYear,
+			"nyuid": student.nyuid,
+			"cardid": student.cardid
+		}
+		self.write(json_encode(sObj))
 
 class EditStudentHandler(tornado.web.RequestHandler):
 	def get(self, sid):
@@ -125,8 +132,8 @@ class EditStudentHandler(tornado.web.RequestHandler):
 		student.save()
 		self.redirect('/')
 
-class ReportDeleteHandler(tornado.web.RequestHandler):
-	def get(self, report_id):
+class StudentDeleteHandler(tornado.web.RequestHandler):
+	def get(self, sid):
 		if len(sid) < 7:
 			student = models.Student.objects.get(nyuid=sid)
 		if len(sid) > 7:
