@@ -3,13 +3,11 @@
 
 {% block body %}
 
-
-<form method="POST">
+<form method="POST" name="editForm">
 	First Name: <input type="text" name="firstName" {% if student["firstName"] %} value="{{ student["firstName"] }}" {% else %} value="" {% end %}><br>
 	Last Name: <input type="text" name="lastName" {% if student["lastName"] %} value="{{ student["lastName"] }}" {% else %} value="" {% end %}><br>
 	NYU ID: <input type="text" name="nyuid" {% if student["nyuid"] %} value="{{ student["nyuid"] }}" {% else %} value="" {% end %}><br>
-	Graduating Year: <input type="text" name="gradYear" {% if student["gradYear"] %} value="{{ student["gradYear"] }}" {% else %} value="" {% end %}><br>
-	Card ID: <input type="text" name="cardid" {% if student["cardid"] %} value="{{ student["cardid"] }}" {% else %} value="" {% end %}><br>
+	Card ID: <input type="text" id="cardid" name="cardid" {% if student["cardid"] %} value="{{ student["cardid"] }}" {% else %} value="" {% end %}><br>
 	<input type="submit" value="Save"> 
 </form>
 

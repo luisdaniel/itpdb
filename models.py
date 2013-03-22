@@ -14,7 +14,6 @@ class Student(Document):
 	lastName = StringField()
 	nyuid = StringField()
 	cardid = IntField()
-	gradYear = IntField()
 
 
 

@@ -50,7 +50,8 @@ class Application(tornado.web.Application):
 			(r"/edit/([a-zA-Z0-9]{6})", EditStudentHandler),
 			(r"/edit/([a-zA-Z0-9]{24})", EditStudentHandler),
 			(r"/delete/([a-zA-Z0-9]{24})", StudentDeleteHandler),
-			(r"/delete/([a-zA-Z0-9]{6})", StudentDeleteHandler)
+			(r"/delete/([a-zA-Z0-9]{6})", StudentDeleteHandler),
+			(r"/load/", LoadEveryone)
 		]
 		settings = dict(
 			template_path=os.path.join(os.path.dirname(__file__), "templates"),
@@ -81,13 +82,11 @@ class AddStudentHandler(tornado.web.RequestHandler):
 		firstName = self.get_argument('firstName', None)
 		lastName = self.get_argument('lastName', None)
 		nyuid = self.get_argument('nyuid', None)
-		gradYear = self.get_argument('gradYear', None)
 		cardid = self.get_argument('cardid', None)
 		student = models.Student(
 			firstName = firstName,
 			lastName = lastName,
 			nyuid = nyuid,
-			gradYear = gradYear,
 			cardid = cardid
 		)
 		student.save()
@@ -99,7 +98,6 @@ class ViewStudentHandler(tornado.web.RequestHandler):
 		sObj = {
 			"firstName": student.firstName,
 			"lastName": student.lastName,
-			"gradYear": student.gradYear,
 			"nyuid": student.nyuid,
 			"cardid": student.cardid
 		}
@@ -127,7 +125,6 @@ class EditStudentHandler(tornado.web.RequestHandler):
 		student.firstName = self.get_argument('firstName', None)
 		student.lastName = self.get_argument('lastName', None)
 		student.nyuid = self.get_argument('nyuid', None)
-		student.gradYear = self.get_argument('gradYear', None)
 		student.cardid = self.get_argument('cardid', None)
 		student.save()
 		self.redirect('/')
@@ -139,6 +136,26 @@ class StudentDeleteHandler(tornado.web.RequestHandler):
 		if len(sid) > 7:
 			student = models.Student.objects.get(cardid=sid)
 		student.delete()
+		self.redirect("/")
+
+class LoadEveryone(tornado.web.RequestHandler):
+	def get(self):
+		infilename = "/Users/slaffont/Dropbox/Semester4/itpdb/templates/students.json"
+		infile = open(infilename, "r")
+		students = []
+		for line in infile:
+			try:
+				newStudent = json.loads(line)
+			except:
+				continue
+			students.append(newStudent) 
+		for student in students:
+			student = models.Student(
+				firstName = student["firstName"],
+				lastName = student["lastName"],
+				nyuid = student["nyuid"],
+			)
+			student.save()
 		self.redirect("/")
 
 class StudentModule(tornado.web.UIModule):
