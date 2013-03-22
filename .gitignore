@@ -6,3 +6,5 @@ lib/
 share/
 src/
 .env
+templates/students.json
+templates/students.html
