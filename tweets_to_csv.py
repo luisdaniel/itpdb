@@ -6,7 +6,7 @@ import time  # We're going to need to deal with a quick time conversion in here
 
 # The path to the file we want to open (change this for your machine)
 # This should be the result of the streaming API
-infilename = "/Users/slaffont/Dropbox/Semester3/CitizenCyberscience/balacera-nov.json"  
+infilename = "/Users/slaffont/Dropbox/Semester4/itpdb/templates/students.json"  
 
 infile = open(infilename, "r") # Open up the file.  "r" says we want to read from it (as opposed to write)
 

@@ -1,3 +1,5 @@
 <div class="event">
-	<p><a href="/edit/{{ student['nyuid'] }}">{{ student["firstName"] }} {{ student["lastName"] }}</a><a href="/view/{{ student['nyuid'] }}"> (View)</a></p>
+	{% if student["cardid"] is None %}
+		<p><a href="/edit/{{ student['nyuid'] }}">{{ student["firstName"] }} {{ student["lastName"] }}</a><a href="/view/{{ student['nyuid'] }}"> (View)</a></p>
+	{% end %}
 </div>
