@@ -46,11 +46,9 @@ class Application(tornado.web.Application):
 		handlers = [
 			(r"/", MainHandler),
 			(r"/add/", AddStudentHandler),
-			(r"/view/([a-zA-Z0-9]{6})", ViewStudentHandler),
-			(r"/edit/([a-zA-Z0-9]{5,6})", EditStudentHandler),
-			(r"/edit/([a-zA-Z0-9]{24})", EditStudentHandler),
-			(r"/delete/([a-zA-Z0-9]{24})", StudentDeleteHandler),
-			(r"/delete/([a-zA-Z0-9]{6})", StudentDeleteHandler),
+			(r"/view/([a-zA-Z0-9]{5,7})", ViewStudentHandler),
+			(r"/edit/([a-zA-Z0-9]{5,7})", EditStudentHandler),
+			(r"/delete/([a-zA-Z0-9]{5,7})", StudentDeleteHandler),
 			(r"/load/", LoadEveryone)
 		]
 		settings = dict(
@@ -94,7 +92,12 @@ class AddStudentHandler(tornado.web.RequestHandler):
 
 class ViewStudentHandler(tornado.web.RequestHandler):
 	def get(self, sid):
-		student = models.Student.objects.get(nyuid = sid)
+		if len(sid) < 7:
+			student = models.Student.objects.get(nyuid=sid)
+		if len(sid) > 7:
+			student = models.Student.objects.get(cardid=sid)
+		if student is None:
+			self.render("404.html", message=card_id)
 		sObj = {
 			"firstName": student.firstName,
 			"lastName": student.lastName,
@@ -105,10 +108,11 @@ class ViewStudentHandler(tornado.web.RequestHandler):
 
 class EditStudentHandler(tornado.web.RequestHandler):
 	def get(self, sid):
-		if len(sid) < 7:
-			student = models.Student.objects.get(nyuid=sid)
-		if len(sid) > 7:
+		try: 
+			type(int(sid))
 			student = models.Student.objects.get(cardid=sid)
+		except:
+			student = models.Student.objects.get(nyuid=sid)
 		if student is None:
 			self.render("404.html", message=card_id)
 		self.render(
