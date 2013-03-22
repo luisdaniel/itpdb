@@ -47,7 +47,7 @@ class Application(tornado.web.Application):
 			(r"/", MainHandler),
 			(r"/add/", AddStudentHandler),
 			(r"/view/([a-zA-Z0-9]{6})", ViewStudentHandler),
-			(r"/edit/([a-zA-Z0-9]{6})", EditStudentHandler),
+			(r"/edit/([a-zA-Z0-9]{5,6})", EditStudentHandler),
 			(r"/edit/([a-zA-Z0-9]{24})", EditStudentHandler),
 			(r"/delete/([a-zA-Z0-9]{24})", StudentDeleteHandler),
 			(r"/delete/([a-zA-Z0-9]{6})", StudentDeleteHandler),
