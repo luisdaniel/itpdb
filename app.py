@@ -92,10 +92,11 @@ class AddStudentHandler(tornado.web.RequestHandler):
 
 class ViewStudentHandler(tornado.web.RequestHandler):
 	def get(self, sid):
-		if len(sid) < 7:
-			student = models.Student.objects.get(nyuid=sid)
-		if len(sid) > 7:
+		try: 
+			type(int(sid))
 			student = models.Student.objects.get(cardid=sid)
+		except:
+			student = models.Student.objects.get(nyuid=sid)
 		if student is None:
 			self.render("404.html", message=card_id)
 		sObj = {
